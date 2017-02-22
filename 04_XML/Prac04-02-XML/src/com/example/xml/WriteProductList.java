@@ -9,19 +9,21 @@ import javax.xml.bind.Marshaller;
 
 public class WriteProductList {
   public static void writeXML() {
-    List<Product> newList = new ArrayList<>();    
+    List<Product> productListRaw = new ArrayList<>();    
     
-    // Create new products
-
-    // Add products to ProductList
+      productListRaw.add(new Product("Widget", 25.00, "The all new multifunction widget"));
+      productListRaw.add(new Product("Widget Pro", 35.00, "The all new multifunction widget (pro)"));
+      productListRaw.add(new Product("Widget Pro XL", 45.00, "The all new multifunction widget pro xl"));
+      
+      ProductList pl = new ProductList(productListRaw);
     
     try {
       JAXBContext jc = JAXBContext.newInstance(ProductList.class);
       Marshaller m = jc.createMarshaller();
 
-      // Format the output
- 
-      // Marshall the objects
+      m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+      m.marshal(pl, new File("ProductList.xml"));
+      m.marshal(pl, System.out);
       
     } catch (JAXBException e) {
       System.out.println("JAXB Exception: " + e.getMessage());
